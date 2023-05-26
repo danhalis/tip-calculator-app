@@ -1,7 +1,8 @@
-"use client"
+"use client" // https://nextjs.org/docs/getting-started/react-essentials#client-components
 
 import React from "react";
-import { Card, TextField, Button } from "@mui/material"
+import { Card, Button } from "@mui/material";
+import AmountInput from "@/components/AmountInput";
 import TipSelectionButton from "@/components/TipSelectionButton";
 
 export default function Home() {
@@ -24,10 +25,10 @@ export default function Home() {
             flex-1
           "
         >
-          <h2>Bill</h2>
-          <TextField
+          <AmountInput
             id="bill"
-            placeholder="0"
+            label="Bill"
+            icon="/icon-dollar.svg"
           />
           <h2>Select Tip %</h2>
           <div className="grid grid-cols-3">
@@ -38,10 +39,10 @@ export default function Home() {
             <TipSelectionButton>50%</TipSelectionButton>
             <TipSelectionButton>Custom</TipSelectionButton>
           </div>
-          <h2>Number of People</h2>
-          <TextField
+          <AmountInput
             id="people-num"
-            placeholder="0"
+            label="Number of People"
+            icon="/icon-person.svg"
           />
         </div>
         <Card

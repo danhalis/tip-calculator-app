@@ -2,7 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply
-			bg-[#c5e4e7]
+@layer base {
+  body {
+    @apply
+      bg-[#c5e4e7];
+  }
+}
+
+@layer components {
+  .amount-input {
+    @apply
+      bg-[#f4fafa];
+  }
 }
