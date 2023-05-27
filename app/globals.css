@@ -10,6 +10,11 @@
 }
 
 @layer components {
+  .field-label {
+    @apply
+      text-[#7f9c9f]
+      text-sm
+  }
   .amount-input {
     @apply
       rounded

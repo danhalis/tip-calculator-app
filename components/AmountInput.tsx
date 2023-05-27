@@ -90,16 +90,20 @@ function AmountInput({ id, label, icon, iconWidth, iconHeight }: Props) {
   }
   return (
     <div>
-      <h2>{label}</h2>
+      <h2 className="field-label">{label}</h2>
       <ThemeProvider theme={customTheme(outerTheme)}>
         <TextField
-          className="amount-input"
           id={id}
           placeholder="0"
-          variant="outlined"
           type="number"
+          // styles
+          className="amount-input"
+          variant="outlined"
+          fullWidth
           size="small"
+          margin="dense"
           inputProps={muiInputProps}
+          // icon
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -107,6 +111,7 @@ function AmountInput({ id, label, icon, iconWidth, iconHeight }: Props) {
               </InputAdornment>
             ),
           }}
+          // events
           onChange={onChange}
           onKeyPress={(event) => {
             if(!event.key.match(/^\d$/g)) {
