@@ -1,6 +1,10 @@
 import React, { ChangeEvent } from "react";
 import Image from "next/image";
-import { InputAdornment, InputBaseComponentProps, TextField } from "@mui/material";
+import {
+  InputAdornment,
+  InputBaseComponentProps,
+  TextField,
+} from "@mui/material";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import {
   createTheme,
@@ -8,12 +12,8 @@ import {
   Theme,
   useTheme,
 } from "@mui/material/styles";
-import { Space_Mono } from 'next/font/google';
 
-const monospace = Space_Mono({
-  weight: '700',
-  subsets: [ 'latin' ]
-})
+import { monospace } from "@/app/constants";
 
 interface Props {
   id: string;
@@ -26,13 +26,13 @@ interface Props {
 // Override style of MuiOutlinedInput:
 const muiInputProps: InputBaseComponentProps = {
   min: 0,
-  className: monospace.className,
-  style: {
-    fontSize: 24,
-    color: "#00494d",
-    textAlign: "right",
-  }
-}
+  className: `
+    ${monospace.className}
+    text-[#00494d]
+    text-2xl
+    text-right
+  `,
+};
 
 // https://mui.com/material-ui/react-text-field/#using-the-theme-style-overrides-api
 const customTheme = (outerTheme: Theme) =>
@@ -55,7 +55,7 @@ const customTheme = (outerTheme: Theme) =>
       MuiOutlinedInput: {
         styleOverrides: {
           notchedOutline: {
-            borderWidth: 0
+            borderWidth: 0,
           },
           root: {
             [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
@@ -86,8 +86,7 @@ const customTheme = (outerTheme: Theme) =>
 function AmountInput({ id, label, icon, iconWidth, iconHeight }: Props) {
   const outerTheme = useTheme();
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-  }
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {};
   return (
     <div>
       <h2 className="field-label">{label}</h2>
@@ -97,7 +96,7 @@ function AmountInput({ id, label, icon, iconWidth, iconHeight }: Props) {
           placeholder="0"
           type="number"
           // styles
-          className="amount-input"
+          className="amt-input"
           variant="outlined"
           fullWidth
           size="small"
@@ -107,14 +106,19 @@ function AmountInput({ id, label, icon, iconWidth, iconHeight }: Props) {
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <Image src={icon} alt="" width={iconWidth} height={iconHeight} />
+                <Image
+                  src={icon}
+                  alt=""
+                  width={iconWidth}
+                  height={iconHeight}
+                />
               </InputAdornment>
             ),
           }}
           // events
           onChange={onChange}
           onKeyPress={(event) => {
-            if(!event.key.match(/^\d$/g)) {
+            if (!event.key.match(/^\d$/g)) {
               event.preventDefault();
             }
           }}

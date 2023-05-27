@@ -1,10 +1,5 @@
 import "./globals.css";
-import { Space_Mono } from "next/font/google";
-
-const monospace = Space_Mono({
-  weight: "700",
-  subsets: ["latin"],
-});
+import { monospace } from "./constants";
 
 export const metadata = {
   title: "Create Next App",
