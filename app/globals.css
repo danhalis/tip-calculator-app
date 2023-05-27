@@ -12,6 +12,7 @@
 @layer components {
   .amount-input {
     @apply
+      rounded
       bg-[#f4fafa];
   }
 }

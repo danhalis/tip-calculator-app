@@ -29,6 +29,8 @@ export default function Home() {
             id="bill"
             label="Bill"
             icon="/icon-dollar.svg"
+            iconWidth={11.6}
+            iconHeight={18}
           />
           <h2>Select Tip %</h2>
           <div className="grid grid-cols-3">
@@ -43,6 +45,8 @@ export default function Home() {
             id="people-num"
             label="Number of People"
             icon="/icon-person.svg"
+            iconWidth={14.6}
+            iconHeight={18}
           />
         </div>
         <Card

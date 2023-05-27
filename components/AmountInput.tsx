@@ -1,33 +1,53 @@
-import React from 'react';
+import React, { ChangeEvent } from "react";
 import Image from "next/image";
-import { InputAdornment, TextField } from '@mui/material';
-import { outlinedInputClasses } from '@mui/material/OutlinedInput';
-import { createTheme, ThemeProvider, Theme, useTheme } from '@mui/material/styles';
+import { InputAdornment, InputBaseComponentProps, TextField } from "@mui/material";
+import { outlinedInputClasses } from "@mui/material/OutlinedInput";
+import {
+  createTheme,
+  ThemeProvider,
+  Theme,
+  useTheme,
+} from "@mui/material/styles";
+import { Space_Mono } from 'next/font/google';
+
+const monospace = Space_Mono({
+  weight: '700',
+  subsets: [ 'latin' ]
+})
 
 interface Props {
   id: string;
   label: string;
   icon: string;
+  iconWidth: number;
+  iconHeight: number;
 }
 
 // Override style of MuiOutlinedInput:
+const muiInputProps: InputBaseComponentProps = {
+  min: 0,
+  className: monospace.className,
+  style: {
+    fontSize: 24,
+    color: "#00494d",
+    textAlign: "right",
+  }
+}
+
 // https://mui.com/material-ui/react-text-field/#using-the-theme-style-overrides-api
 const customTheme = (outerTheme: Theme) =>
   createTheme({
     palette: {
       mode: outerTheme.palette.mode,
     },
-    typography: {
-      fontFamily: "Space Mono, monospace",
-    },
     components: {
       MuiTextField: {
         styleOverrides: {
           root: {
-            '--TextField-brandBorderHoverColor': '#5e7a7d',
-            '--TextField-brandBorderFocusedColor': '#5e7a7d',
-            '& label.Mui-focused': {
-              color: 'var(--TextField-brandBorderFocusedColor)',
+            "--TextField-brandBorderHoverColor": "#5e7a7d",
+            "--TextField-brandBorderFocusedColor": "#5e7a7d",
+            "& label.Mui-focused": {
+              color: "var(--TextField-brandBorderFocusedColor)",
             },
           },
         },
@@ -39,12 +59,23 @@ const customTheme = (outerTheme: Theme) =>
           },
           root: {
             [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
-              borderColor: 'var(--TextField-brandBorderHoverColor)',
-              borderWidth: 1
+              borderColor: "var(--TextField-brandBorderHoverColor)",
+              borderWidth: 1,
             },
             [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
-              borderColor: 'var(--TextField-brandBorderFocusedColor)',
-              borderWidth: 2
+              borderColor: "var(--TextField-brandBorderFocusedColor)",
+              borderWidth: 2,
+            },
+            "& input[type=number]": {
+              MozAppearance: "textfield",
+            },
+            "& input[type=number]::-webkit-outer-spin-button": {
+              WebkitAppearance: "none",
+              margin: 0,
+            },
+            "& input[type=number]::-webkit-inner-spin-button": {
+              WebkitAppearance: "none",
+              margin: 0,
             },
           },
         },
@@ -52,9 +83,11 @@ const customTheme = (outerTheme: Theme) =>
     },
   });
 
-function AmountInput({ id, label, icon }: Props) {
+function AmountInput({ id, label, icon, iconWidth, iconHeight }: Props) {
   const outerTheme = useTheme();
 
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+  }
   return (
     <div>
       <h2>{label}</h2>
@@ -64,23 +97,26 @@ function AmountInput({ id, label, icon }: Props) {
           id={id}
           placeholder="0"
           variant="outlined"
+          type="number"
+          size="small"
+          inputProps={muiInputProps}
           InputProps={{
-            disableUnderline: true,
             startAdornment: (
               <InputAdornment position="start">
-                <Image
-                  src={icon}
-                  alt=""
-                  width={50}
-                  height={50}
-                />
+                <Image src={icon} alt="" width={iconWidth} height={iconHeight} />
               </InputAdornment>
             ),
+          }}
+          onChange={onChange}
+          onKeyPress={(event) => {
+            if(!event.key.match(/^\d$/g)) {
+              event.preventDefault();
+            }
           }}
         />
       </ThemeProvider>
     </div>
-  )
+  );
 }
 
-export default AmountInput
+export default AmountInput;
