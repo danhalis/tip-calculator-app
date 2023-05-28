@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import AmountInput from "./AmountInput";
 import TipSelectionRadioButtonGroup from "./TipSelectionRadioButtonGroup";
 
@@ -8,6 +8,9 @@ interface Props {
 }
 
 function InputPanel({ className }: Props) {
+  const [bill, setBill] = useState<string>("");
+  const [peopleNum, setPeopleNum] = useState<string>("");
+
   return (
     <Card
       className={`${className}`}
@@ -15,6 +18,7 @@ function InputPanel({ className }: Props) {
     >
       <CardContent>
         <AmountInput
+          value={bill}
           ariaLabel="bill"
           label="Bill"
           icon="/icon-dollar.svg"
@@ -22,13 +26,20 @@ function InputPanel({ className }: Props) {
           iconHeight={18}
           margin="dense"
           tailwindHeight="h-11"
+          onValueChange={(value) => {
+            const zero = value == "0";
+            if (zero && bill == "") return;
+
+            setBill(value);
+          }}
         />
         <TipSelectionRadioButtonGroup
-          onTipSelectionChanged={(tipPercentage) => {
-            console.log(tipPercentage);
+          onTipSelectionChanged={(tipP) => {
+            console.log(tipP);
           }}
         />
         <AmountInput
+          value={peopleNum}
           ariaLabel="people-num"
           label="Number of People"
           icon="/icon-person.svg"
@@ -36,6 +47,12 @@ function InputPanel({ className }: Props) {
           iconHeight={18}
           margin="dense"
           tailwindHeight="h-11"
+          onValueChange={(value) => {
+            const zero = value == "0";
+            if (zero && peopleNum == "") return;
+
+            setPeopleNum(value);
+          }}
         />
       </CardContent>
     </Card>

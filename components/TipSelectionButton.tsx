@@ -9,7 +9,7 @@ interface Props {
   tip: string;
   custom?: boolean;
   selected?: boolean;
-  onCustomPercentageChange?: (percentage: number) => void;
+  onCustomPercentageChange?: (percentage: string) => void;
 }
 
 function TipSelectionButton({
@@ -49,7 +49,7 @@ function TipSelectionButton({
             if (Number.isNaN(parsed)) parsed = 0;
 
             // Report updated custom percentage to upstream
-            onCustomPercentageChange(parsed);
+            onCustomPercentageChange(`${parsed}`);
           }}
         />
       )}

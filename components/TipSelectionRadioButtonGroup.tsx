@@ -22,12 +22,14 @@ function TipSelectionRadioButtonGroup({ onTipSelectionChanged }: Props) {
   ]);
 
   const [, setCustomPercentage] = useState<string>("");
-  const onCustomPercentageChange = (value: number) => {
-    setCustomPercentage(value == 0 ? "" : `${value}`);
-    tips[tips.length - 1].percentage = value == 0 ? "" : `${value}`;
+  const onCustomPercentageChange = (value: string) => {
+    const zero = value == "0";
+    if (zero && tips[tips.length - 1].percentage == "") return;
+    setCustomPercentage(zero ? "" : `${value}`);
+    tips[tips.length - 1].percentage = zero ? "" : `${value}`;
 
     // Report selected tip percentage to upstream
-    onTipSelectionChanged(value == 0 ? "0%" : `${value}%`);
+    onTipSelectionChanged(zero ? "0%" : `${value}%`);
   };
 
   const [selectedTipIndex, setSelectedTipIndex] = useState<number>(-1);
