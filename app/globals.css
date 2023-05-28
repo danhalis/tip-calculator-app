@@ -30,6 +30,7 @@
       hover:text-[#00494d]
       text-xl
       normal-case
+      h-11
   }
   .custom-tip-selection-btn {
     @apply

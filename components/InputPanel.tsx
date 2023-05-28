@@ -15,19 +15,23 @@ function InputPanel({ className }: Props) {
     >
       <CardContent>
         <AmountInput
-          id="bill"
+          ariaLabel="bill"
           label="Bill"
           icon="/icon-dollar.svg"
           iconWidth={11.6}
           iconHeight={18}
+          margin="dense"
+          tailwindHeight="h-11"
         />
         <TipSelectionRadioButtonGroup />
         <AmountInput
-          id="people-num"
+          ariaLabel="people-num"
           label="Number of People"
           icon="/icon-person.svg"
           iconWidth={14.6}
           iconHeight={18}
+          margin="dense"
+          tailwindHeight="h-11"
         />
       </CardContent>
     </Card>

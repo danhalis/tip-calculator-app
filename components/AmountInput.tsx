@@ -16,23 +16,17 @@ import {
 import { monospace700 } from "@/app/constants";
 
 interface Props {
-  id: string;
-  label: string;
-  icon: string;
-  iconWidth: number;
-  iconHeight: number;
+  ariaLabel: string;
+  label?: string;
+  icon?: string;
+  iconWidth?: number;
+  iconHeight?: number;
+  focused?: boolean;
+  size?: "medium" | "small";
+  tailwindHeight?: string;
+  margin?: "none" | "dense" | "normal";
+  tailwindFontSize?: string;
 }
-
-// Override style of MuiOutlinedInput:
-const muiInputProps: InputBaseComponentProps = {
-  min: 0,
-  className: `
-    ${monospace700.className}
-    text-[#00494d]
-    text-2xl
-    text-right
-  `,
-};
 
 // https://mui.com/material-ui/react-text-field/#using-the-theme-style-overrides-api
 const customTheme = (outerTheme: Theme) =>
@@ -83,35 +77,62 @@ const customTheme = (outerTheme: Theme) =>
     },
   });
 
-function AmountInput({ id, label, icon, iconWidth, iconHeight }: Props) {
+function AmountInput({
+  ariaLabel,
+  label,
+  icon,
+  iconWidth,
+  iconHeight,
+  size,
+  tailwindHeight,
+  margin,
+  focused = false,
+  tailwindFontSize = "text-2xl",
+}: Props) {
+  // Override style of MuiOutlinedInput:
   const outerTheme = useTheme();
+  const muiInputProps: InputBaseComponentProps = {
+    min: 0,
+    className: `
+      ${monospace700.className}
+      text-[#00494d]
+      caret-[#9fe8df]
+      ${tailwindFontSize}
+      text-right
+    `,
+  };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {};
   return (
     <div>
-      <h2 className="field-label">{label}</h2>
+      {label && <h2 className="field-label">{label}</h2>}
       <ThemeProvider theme={customTheme(outerTheme)}>
         <TextField
-          id={id}
+          aria-label={ariaLabel}
           placeholder="0"
           type="number"
+          focused={focused}
+          autoFocus={focused}
           // styles
           className="amt-input"
           variant="outlined"
           fullWidth
-          size="small"
-          margin="dense"
+          size={size}
+          margin={margin}
           inputProps={muiInputProps}
           // icon
           InputProps={{
+            className: `${tailwindHeight}`,
             startAdornment: (
               <InputAdornment position="start">
-                <Image
-                  src={icon}
-                  alt=""
-                  width={iconWidth}
-                  height={iconHeight}
-                />
+                {icon && (
+                  <Image
+                    src={icon}
+                    alt=""
+                    width={iconWidth}
+                    height={iconHeight}
+                  />
+                )}
               </InputAdornment>
             ),
           }}

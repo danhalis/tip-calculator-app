@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import React, { useState } from "react";
 import TipSelectionButton from "./TipSelectionButton";
+import AmountInput from "./AmountInput";
 
 interface Tip {
   percentage: string;
@@ -20,11 +21,15 @@ function TipSelectionRadioButtonGroup() {
   const [selectedTip, setSelectedTip] = useState<number>(-1);
 
   const onClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    // If the target element is not a button
     if (e.target == e.currentTarget || !(e.target instanceof HTMLButtonElement))
       return;
 
     const selectedBtn = e.target as HTMLButtonElement;
-    if (selectedBtn.ariaLabel != "tip-selection") return;
+
+    // If the target button is not a TipSelectionButton
+    // Note: selectedBtn.ariaLabel won't work on Firefox
+    if (selectedBtn.getAttribute("aria-label") != "tip-selection") return;
 
     // Get the target tip index
     const i = +selectedBtn.getAttribute("data-id")!;
