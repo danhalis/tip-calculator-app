@@ -30,7 +30,7 @@ function TipSelectionRadioButtonGroup({ onTipSelectionChanged }: Props) {
     onTipSelectionChanged(value == 0 ? "0%" : `${value}%`);
   };
 
-  const [selectedTip, setSelectedTip] = useState<number>(-1);
+  const [selectedTipIndex, setSelectedTipIndex] = useState<number>(-1);
 
   const onClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     // If the target element is not a button
@@ -46,14 +46,17 @@ function TipSelectionRadioButtonGroup({ onTipSelectionChanged }: Props) {
     // Get the target tip index
     const i = +selectedBtn.getAttribute("data-id")!;
 
+    // If this tip is already selected
+    if (i == selectedTipIndex) return;
+
     // Unselect the currently selected tip
-    if (selectedTip != -1) {
-      tips[selectedTip].selected = false;
+    if (selectedTipIndex != -1) {
+      tips[selectedTipIndex].selected = false;
     }
 
     // Select the target tip
     tips[i].selected = true;
-    setSelectedTip(i);
+    setSelectedTipIndex(i);
 
     // Report selected tip percentage to upstream
     if (tips[i].custom) {
