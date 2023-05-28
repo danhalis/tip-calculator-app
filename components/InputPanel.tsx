@@ -23,7 +23,11 @@ function InputPanel({ className }: Props) {
           margin="dense"
           tailwindHeight="h-11"
         />
-        <TipSelectionRadioButtonGroup />
+        <TipSelectionRadioButtonGroup
+          onTipSelectionChanged={(tipPercentage) => {
+            console.log(tipPercentage);
+          }}
+        />
         <AmountInput
           ariaLabel="people-num"
           label="Number of People"

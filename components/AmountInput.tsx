@@ -16,6 +16,7 @@ import {
 import { monospace700 } from "@/app/constants";
 
 interface Props {
+  value?: string;
   ariaLabel: string;
   label?: string;
   icon?: string;
@@ -26,6 +27,7 @@ interface Props {
   tailwindHeight?: string;
   margin?: "none" | "dense" | "normal";
   tailwindFontSize?: string;
+  onValueChange?: (value: string) => void;
 }
 
 // https://mui.com/material-ui/react-text-field/#using-the-theme-style-overrides-api
@@ -78,6 +80,7 @@ const customTheme = (outerTheme: Theme) =>
   });
 
 function AmountInput({
+  value = "",
   ariaLabel,
   label,
   icon,
@@ -88,6 +91,7 @@ function AmountInput({
   margin,
   focused = false,
   tailwindFontSize = "text-2xl",
+  onValueChange = () => {},
 }: Props) {
   // Override style of MuiOutlinedInput:
   const outerTheme = useTheme();
@@ -102,12 +106,19 @@ function AmountInput({
     `,
   };
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {};
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    // Report new amount to upstream
+    onValueChange(value);
+  };
+
   return (
     <div>
       {label && <h2 className="field-label">{label}</h2>}
       <ThemeProvider theme={customTheme(outerTheme)}>
         <TextField
+          value={value}
           aria-label={ariaLabel}
           placeholder="0"
           type="number"
