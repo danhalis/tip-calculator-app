@@ -1,12 +1,12 @@
 import { Box, Button, Card, CardActions, CardContent } from "@mui/material";
 import React from "react";
-import { monospace } from "@/app/constants";
+import { monospace700 } from "@/app/constants";
 
 interface Props {
   className: string;
 }
 
-function ResultPanel({ className }: Props) {
+function OutputPanel({ className }: Props) {
   return (
     <Card
       className={`
@@ -48,7 +48,7 @@ function ResultPanel({ className }: Props) {
       <CardActions className="pb-8 px-8">
         <Button
           variant="contained"
-          className={`${monospace.className} action-btn`}
+          className={`${monospace700.className} action-btn`}
           fullWidth
         >
           RESET
@@ -58,4 +58,4 @@ function ResultPanel({ className }: Props) {
   );
 }
 
-export default ResultPanel;
+export default OutputPanel;

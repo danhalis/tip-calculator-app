@@ -1,5 +1,5 @@
 import "./globals.css";
-import { monospace } from "./constants";
+import { monospace700 } from "./constants";
 
 export const metadata = {
   title: "Create Next App",
@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={monospace.className}>{children}</body>
+      <body className={monospace700.className}>{children}</body>
     </html>
   );
 }

@@ -13,7 +13,7 @@ import {
   useTheme,
 } from "@mui/material/styles";
 
-import { monospace } from "@/app/constants";
+import { monospace700 } from "@/app/constants";
 
 interface Props {
   id: string;
@@ -27,7 +27,7 @@ interface Props {
 const muiInputProps: InputBaseComponentProps = {
   min: 0,
   className: `
-    ${monospace.className}
+    ${monospace700.className}
     text-[#00494d]
     text-2xl
     text-right
@@ -44,8 +44,8 @@ const customTheme = (outerTheme: Theme) =>
       MuiTextField: {
         styleOverrides: {
           root: {
-            "--TextField-brandBorderHoverColor": "#5e7a7d",
-            "--TextField-brandBorderFocusedColor": "#5e7a7d",
+            "--TextField-brandBorderHoverColor": "#9fe8df",
+            "--TextField-brandBorderFocusedColor": "#9fe8df",
             "& label.Mui-focused": {
               color: "var(--TextField-brandBorderFocusedColor)",
             },
@@ -60,7 +60,7 @@ const customTheme = (outerTheme: Theme) =>
           root: {
             [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
               borderColor: "var(--TextField-brandBorderHoverColor)",
-              borderWidth: 1,
+              borderWidth: 2,
             },
             [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
               borderColor: "var(--TextField-brandBorderFocusedColor)",

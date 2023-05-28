@@ -15,10 +15,31 @@
       text-[#7f9c9f]
       text-sm
   }
+
   .amt-input {
     @apply
       rounded
-      bg-[#f4fafa];
+      bg-[#f4fafa]
+  }
+
+  .tip-selection-btn {
+    @apply
+      bg-[#00494d]
+      hover:bg-[#9fe8df]
+      text-white
+      hover:text-[#00494d]
+      text-xl
+      normal-case
+  }
+  .custom-tip-selection-btn {
+    @apply
+      bg-[#f4fafa]
+      text-[#00494d]
+  }
+  .tip-selection-btn-selected {
+    @apply
+      bg-[#26c0ab]
+      text-[#00494d]
   }
 
   .result-amt-label {
@@ -36,6 +57,7 @@
       text-[#26c0ab]
       text-4xl
   }
+
   .action-btn {
     @apply
       bg-[#26c0ab]

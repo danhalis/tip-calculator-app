@@ -2,9 +2,8 @@
 
 import React from "react";
 import { Card, CardContent } from "@mui/material";
-import AmountInput from "@/components/AmountInput";
-import TipSelectionButton from "@/components/TipSelectionButton";
-import ResultPanel from "@/components/ResultPanel";
+import InputPanel from "@/components/InputPanel";
+import OutputPanel from "@/components/OutputPanel";
 
 export default function Home() {
   return (
@@ -21,42 +20,12 @@ export default function Home() {
         className="
         flex
         rounded-3xl
-        h-[40vh] w-[80vw]"
+        w-[100vh]
+        "
       >
         <CardContent className="w-full flex p-6">
-          <Card
-            className="
-            flex-1
-          "
-            style={{ border: "none", boxShadow: "none" }}
-          >
-            <CardContent>
-              <AmountInput
-                id="bill"
-                label="Bill"
-                icon="/icon-dollar.svg"
-                iconWidth={11.6}
-                iconHeight={18}
-              />
-              <h2>Select Tip %</h2>
-              <div className="grid grid-cols-3">
-                <TipSelectionButton>5%</TipSelectionButton>
-                <TipSelectionButton>10%</TipSelectionButton>
-                <TipSelectionButton>15%</TipSelectionButton>
-                <TipSelectionButton>25%</TipSelectionButton>
-                <TipSelectionButton>50%</TipSelectionButton>
-                <TipSelectionButton>Custom</TipSelectionButton>
-              </div>
-              <AmountInput
-                id="people-num"
-                label="Number of People"
-                icon="/icon-person.svg"
-                iconWidth={14.6}
-                iconHeight={18}
-              />
-            </CardContent>
-          </Card>
-          <ResultPanel className="flex-1" />
+          <InputPanel className="flex-1 pr-6" />
+          <OutputPanel className="flex-1" />
         </CardContent>
       </Card>
     </div>
