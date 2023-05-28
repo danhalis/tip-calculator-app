@@ -1,12 +1,21 @@
 "use client"; // https://nextjs.org/docs/getting-started/react-essentials#client-components
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { Card, CardContent } from "@mui/material";
-import InputPanel from "@/components/InputPanel";
+import InputPanel, { Input } from "@/components/InputPanel";
 import OutputPanel from "@/components/OutputPanel";
 
 export default function Home() {
+  const [input, setInput] = useState<Input>({
+    bill: 0,
+    tipPercentage: 0,
+    people: 0,
+  });
+  const onInputChanged = (input: Input) => {
+    setInput(input);
+  };
+
   return (
     <div
       className="
@@ -25,8 +34,8 @@ export default function Home() {
         "
       >
         <CardContent className="w-full flex p-6">
-          <InputPanel className="flex-1 pr-6" />
-          <OutputPanel className="flex-1" />
+          <InputPanel className="flex-1 pr-6" onInputChanged={onInputChanged} />
+          <OutputPanel className="flex-1" input={input} />
         </CardContent>
       </Card>
     </div>

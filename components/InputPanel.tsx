@@ -3,13 +3,26 @@ import React, { useState } from "react";
 import AmountInput from "./AmountInput";
 import TipSelectionRadioButtonGroup from "./TipSelectionRadioButtonGroup";
 
+export interface Input {
+  bill: number;
+  tipPercentage: number;
+  people: number;
+}
 interface Props {
   className: string;
+  onInputChanged: ({
+    bill,
+    tipPercentage,
+    people,
+  }: Input) => void;
 }
 
-function InputPanel({ className }: Props) {
+function InputPanel({ className, onInputChanged }: Props) {
   const [bill, setBill] = useState<string>("");
   const [peopleNum, setPeopleNum] = useState<string>("");
+  const [tipPercentage, setTipPercentage] = useState<string>("");
+
+  const parseStringVal = (stringVal: string) => stringVal == "" ? 0 : parseFloat(stringVal);
 
   return (
     <Card
@@ -31,11 +44,22 @@ function InputPanel({ className }: Props) {
             if (zero && bill == "") return;
 
             setBill(value);
+            onInputChanged({
+              bill: parseStringVal(value),
+              tipPercentage: parseStringVal(tipPercentage),
+              people: parseStringVal(peopleNum),
+            });
           }}
         />
         <TipSelectionRadioButtonGroup
           onTipSelectionChanged={(tipP) => {
+            setTipPercentage(tipP);
             console.log(tipP);
+            onInputChanged({
+              bill: parseStringVal(bill),
+              tipPercentage: parseStringVal(tipP),
+              people: parseStringVal(peopleNum),
+            });
           }}
         />
         <AmountInput
@@ -52,6 +76,11 @@ function InputPanel({ className }: Props) {
             if (zero && peopleNum == "") return;
 
             setPeopleNum(value);
+            onInputChanged({
+              bill: parseStringVal(bill),
+              tipPercentage: parseStringVal(tipPercentage),
+              people: parseStringVal(value),
+            });
           }}
         />
       </CardContent>

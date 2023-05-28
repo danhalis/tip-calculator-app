@@ -5,6 +5,7 @@ import TipSelectionButton from "./TipSelectionButton";
 interface Props {
   onTipSelectionChanged: (tipPercentage: string) => void;
 }
+
 interface Tip {
   percentage: string;
   custom: boolean;
@@ -49,7 +50,12 @@ function TipSelectionRadioButtonGroup({ onTipSelectionChanged }: Props) {
     const i = +selectedBtn.getAttribute("data-id")!;
 
     // If this tip is already selected
-    if (i == selectedTipIndex) return;
+    if (i == selectedTipIndex) {
+      tips[i].selected = false;
+      setSelectedTipIndex(-1);
+      onTipSelectionChanged("0%");
+      return;
+    }
 
     // Unselect the currently selected tip
     if (selectedTipIndex != -1) {

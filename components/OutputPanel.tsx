@@ -1,12 +1,22 @@
 import { Box, Button, Card, CardActions, CardContent } from "@mui/material";
 import React from "react";
 import { monospace700 } from "@/app/constants";
+import { Input } from "./InputPanel";
 
 interface Props {
-  className: string;
+  className?: string;
+  input: Input;
 }
 
-function OutputPanel({ className }: Props) {
+function OutputPanel({ className, input }: Props) {
+  const {
+    bill,
+    tipPercentage,
+    people,
+  } = input;
+
+  const totalTip = (bill * tipPercentage / 100);
+
   return (
     <Card
       className={`
@@ -31,7 +41,7 @@ function OutputPanel({ className }: Props) {
             <h2 className="result-amt-label">Tip Amount</h2>
             <h3 className="result-amt-label-unit">/ person</h3>
           </Box>
-          <h2 className="result-amt">$0.00</h2>
+          <h2 className="result-amt">${totalTip / people}</h2>
         </Box>
         <Box
           className="
@@ -42,7 +52,7 @@ function OutputPanel({ className }: Props) {
             <h2 className="result-amt-label">Total</h2>
             <h3 className="result-amt-label-unit">/ person</h3>
           </Box>
-          <h2 className="result-amt">$0.00</h2>
+          <h2 className="result-amt">${(bill + totalTip) / people}</h2>
         </Box>
       </CardContent>
       <CardActions className="pb-8 px-8">
