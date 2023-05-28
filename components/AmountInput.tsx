@@ -23,6 +23,7 @@ interface Props {
   iconWidth?: number;
   iconHeight?: number;
   focused?: boolean;
+  autoFocus?: boolean;
   size?: "medium" | "small";
   tailwindHeight?: string;
   margin?: "none" | "dense" | "normal";
@@ -90,6 +91,7 @@ function AmountInput({
   tailwindHeight,
   margin,
   focused = false,
+  autoFocus = false,
   tailwindFontSize = "text-2xl",
   onValueChange = () => {},
 }: Props) {
@@ -123,7 +125,7 @@ function AmountInput({
           placeholder="0"
           type="number"
           focused={focused}
-          autoFocus={focused}
+          autoFocus={autoFocus}
           // styles
           className="amt-input"
           variant="outlined"

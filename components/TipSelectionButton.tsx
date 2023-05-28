@@ -42,7 +42,8 @@ function TipSelectionButton({
           ariaLabel="custom-tip"
           tailwindHeight="h-11"
           tailwindFontSize="text-xl"
-          focused
+          focused={selected}
+          autoFocus
           onValueChange={(value) => {
             let parsed = parseFloat(value);
             if (Number.isNaN(parsed)) parsed = 0;
