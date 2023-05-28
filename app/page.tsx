@@ -1,6 +1,7 @@
 "use client"; // https://nextjs.org/docs/getting-started/react-essentials#client-components
 
 import React from "react";
+import Image from "next/image";
 import { Card, CardContent } from "@mui/material";
 import InputPanel from "@/components/InputPanel";
 import OutputPanel from "@/components/OutputPanel";
@@ -12,10 +13,10 @@ export default function Home() {
       h-screen
       flex flex-col
       items-center justify-center
-      space-y-2
+      space-y-20
     "
     >
-      <h1>SPLITTER</h1>
+      <Image src="/logo.svg" alt="" width={70} height={70} />
       <Card
         className="
         flex

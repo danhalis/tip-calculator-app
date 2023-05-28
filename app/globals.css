@@ -61,6 +61,7 @@
   .action-btn {
     @apply
       bg-[#26c0ab]
+      hover:bg-[#9fe8df]
       text-[#00494d]
       text-sm
   }
