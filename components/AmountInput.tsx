@@ -1,22 +1,37 @@
-import React, { ChangeEvent } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import {
+  Box,
   InputAdornment,
   InputBaseComponentProps,
   TextField,
 } from "@mui/material";
-import { outlinedInputClasses } from "@mui/material/OutlinedInput";
+
+import { ThemeProvider, useTheme } from "@mui/material/styles";
 import {
-  createTheme,
-  ThemeProvider,
-  Theme,
-  useTheme,
-} from "@mui/material/styles";
+  monospace700,
+  normalTheme,
+  focusedTheme,
+  errorTheme,
+} from "@/app/constants";
 
-import { monospace700 } from "@/app/constants";
+import { Controller, Control, UseFormRegisterReturn } from "react-hook-form";
+import InputFormSchema from "./InputFormSchema";
 
-interface Props {
+interface AmountInputProps {
+  // form hook
+  control: Control<InputFormSchema, any>;
+  formRegisterFields: UseFormRegisterReturn<
+    "bill" | "tipPercentage" | "people"
+  >;
+  // value
+  min?: number;
+  max?: number;
   value?: string;
+  // error
+  error?: boolean;
+  helperText?: string;
+  // styles
   ariaLabel: string;
   label?: string;
   icon?: string;
@@ -28,60 +43,22 @@ interface Props {
   tailwindHeight?: string;
   margin?: "none" | "dense" | "normal";
   tailwindFontSize?: string;
+  // events
   onValueChange?: (value: string) => void;
 }
 
-// https://mui.com/material-ui/react-text-field/#using-the-theme-style-overrides-api
-const customTheme = (outerTheme: Theme) =>
-  createTheme({
-    palette: {
-      mode: outerTheme.palette.mode,
-    },
-    components: {
-      MuiTextField: {
-        styleOverrides: {
-          root: {
-            "--TextField-brandBorderHoverColor": "#9fe8df",
-            "--TextField-brandBorderFocusedColor": "#9fe8df",
-            "& label.Mui-focused": {
-              color: "var(--TextField-brandBorderFocusedColor)",
-            },
-          },
-        },
-      },
-      MuiOutlinedInput: {
-        styleOverrides: {
-          notchedOutline: {
-            borderWidth: 0,
-          },
-          root: {
-            [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
-              borderColor: "var(--TextField-brandBorderHoverColor)",
-              borderWidth: 2,
-            },
-            [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
-              borderColor: "var(--TextField-brandBorderFocusedColor)",
-              borderWidth: 2,
-            },
-            "& input[type=number]": {
-              MozAppearance: "textfield",
-            },
-            "& input[type=number]::-webkit-outer-spin-button": {
-              WebkitAppearance: "none",
-              margin: 0,
-            },
-            "& input[type=number]::-webkit-inner-spin-button": {
-              WebkitAppearance: "none",
-              margin: 0,
-            },
-          },
-        },
-      },
-    },
-  });
-
 function AmountInput({
+  // form hook
+  control,
+  formRegisterFields,
+  // value
+  min = 0,
+  max,
   value = "",
+  // error
+  error,
+  helperText,
+  // styles
   ariaLabel,
   label,
   icon,
@@ -93,12 +70,14 @@ function AmountInput({
   focused = false,
   autoFocus = false,
   tailwindFontSize = "text-2xl",
+  // events
   onValueChange = () => {},
-}: Props) {
+}: AmountInputProps) {
   // Override style of MuiOutlinedInput:
   const outerTheme = useTheme();
   const muiInputProps: InputBaseComponentProps = {
-    min: 0,
+    min,
+    max,
     className: `
       ${monospace700.className}
       text-[#00494d]
@@ -108,57 +87,100 @@ function AmountInput({
     `,
   };
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
-    // Report new amount to upstream
-    onValueChange(value);
-  };
+  // Keep track of focused state
+  const [typing, setTyping] = useState<boolean>(focused);
 
   return (
-    <div>
-      {label && <h2 className="field-label">{label}</h2>}
-      <ThemeProvider theme={customTheme(outerTheme)}>
-        <TextField
-          value={value}
-          aria-label={ariaLabel}
-          placeholder="0"
-          type="number"
-          focused={focused}
-          autoFocus={autoFocus}
-          // styles
-          className="amt-input"
-          variant="outlined"
-          fullWidth
-          size={size}
-          margin={margin}
-          inputProps={muiInputProps}
-          // icon
-          InputProps={{
-            className: `${tailwindHeight}`,
-            startAdornment: (
-              <InputAdornment position="start">
-                {icon && (
-                  <Image
-                    src={icon}
-                    alt=""
-                    width={iconWidth}
-                    height={iconHeight}
-                  />
-                )}
-              </InputAdornment>
-            ),
-          }}
-          // events
-          onChange={onChange}
-          onKeyPress={(event) => {
-            if (!event.key.match(/^\d$/g)) {
-              event.preventDefault();
+    <Box>
+      <Box className="flex justify-between">
+        {label && <h2 className="field-label">{label}</h2>}
+        {error && <h2 className="error-label">{helperText}</h2>}
+      </Box>
+      <Controller
+        name={formRegisterFields.name}
+        control={control}
+        render={() => (
+          // https://mui.com/material-ui/react-text-field/#using-the-theme-style-overrides-api
+          <ThemeProvider
+            theme={
+              // If error
+              error
+                ? // Set error style
+                  errorTheme(outerTheme)
+                : // If user is typing
+                typing
+                ? // Set focused style
+                  focusedTheme(outerTheme)
+                : // Set normal style
+                  normalTheme(outerTheme)
             }
-          }}
-        />
-      </ThemeProvider>
-    </div>
+          >
+            <TextField
+              // form hook
+              {...formRegisterFields}
+              // value
+              value={value}
+              type="number"
+              // styles
+              aria-label={ariaLabel}
+              placeholder={`${min}`}
+              className="amt-input"
+              variant="outlined"
+              fullWidth
+              size={size}
+              margin={margin}
+              inputProps={muiInputProps}
+              focused={focused}
+              autoFocus={autoFocus}
+              // icon
+              InputProps={{
+                className: `${tailwindHeight}`,
+                startAdornment: (
+                  <InputAdornment position="start">
+                    {icon && (
+                      <Image
+                        src={icon}
+                        alt=""
+                        width={iconWidth}
+                        height={iconHeight}
+                      />
+                    )}
+                  </InputAdornment>
+                ),
+              }}
+              // events
+              onChange={(e) => {
+                const value = e.target.value;
+                // Report new amount to upstream
+                onValueChange(value);
+
+                // If the value is empty, override it with minimum value
+                // -> form won't error out on empty string
+                if (e.target.value == "") e.target.value = `${min}`;
+                // Trigger form's onChange
+                formRegisterFields.onChange(e);
+              }}
+              onFocus={() => {
+                setTyping(true);
+              }}
+              onBlur={(e) => {
+                setTyping(false);
+                // If the value is empty, override it with minimum value
+                // -> form won't error out on empty string
+                if (e.target.value == "") e.target.value = `${min}`;
+                // Trigger form's onBlur
+                formRegisterFields.onBlur(e);
+              }}
+              onKeyPress={(e) => {
+                if (!e.key.match(/^\d$/g)) {
+                  e.preventDefault();
+                }
+              }}
+            />
+          </ThemeProvider>
+        )}
+      />
+    </Box>
   );
 }
 

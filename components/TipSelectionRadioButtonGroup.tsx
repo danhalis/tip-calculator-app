@@ -1,8 +1,15 @@
 import { Box } from "@mui/material";
 import React, { useState } from "react";
 import TipSelectionButton from "./TipSelectionButton";
+import { Control, UseFormRegisterReturn } from "react-hook-form";
+import InputFormSchema from "./InputFormSchema";
 
 interface Props {
+  control: Control<InputFormSchema, any>;
+  formRegisterFields: UseFormRegisterReturn<"tipPercentage">;
+  // error
+  error?: boolean;
+  helperText?: string;
   onTipSelectionChanged: (tipPercentage: string) => void;
 }
 
@@ -12,7 +19,13 @@ interface Tip {
   selected: boolean;
 }
 
-function TipSelectionRadioButtonGroup({ onTipSelectionChanged }: Props) {
+function TipSelectionRadioButtonGroup({
+  control,
+  formRegisterFields,
+  error,
+  helperText,
+  onTipSelectionChanged,
+}: Props) {
   const [tips] = useState<Tip[]>([
     { percentage: "5%", custom: false, selected: false },
     { percentage: "10%", custom: false, selected: false },
@@ -78,15 +91,25 @@ function TipSelectionRadioButtonGroup({ onTipSelectionChanged }: Props) {
 
   return (
     <Box className="my-5">
-      <h2 className="field-label">Select Tip %</h2>
+      <Box className="flex justify-between">
+        <h2 className="field-label">Select Tip %</h2>
+        {error && <h2 className="error-label">{helperText}</h2>}
+      </Box>
       <Box className="grid grid-cols-3 gap-3 mt-2" onClick={onClick}>
         {...tips.map((tip, i) => (
           <TipSelectionButton
+            // form hook
+            control={control}
+            formRegisterFields={formRegisterFields}
+            // error
+            error={error}
+            // value
             key={`${i}`}
             dataId={i}
             tip={tip.percentage}
             custom={tip.custom}
             selected={tip.selected}
+            // events
             onCustomPercentageChange={onCustomPercentageChange}
           />
         ))}

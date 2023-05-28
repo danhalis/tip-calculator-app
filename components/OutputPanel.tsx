@@ -9,13 +9,9 @@ interface Props {
 }
 
 function OutputPanel({ className, input }: Props) {
-  const {
-    bill,
-    tipPercentage,
-    people,
-  } = input;
+  const { bill, tipPercentage, people } = input;
 
-  const totalTip = (bill * tipPercentage / 100);
+  const totalTip = (bill * tipPercentage) / 100;
 
   return (
     <Card
@@ -26,9 +22,8 @@ function OutputPanel({ className, input }: Props) {
       justify-between
       bg-[#00494d]
       rounded-2xl
-      shadow-none
-      border-none
     `}
+      style={{ border: "none", boxShadow: "none" }}
     >
       <CardContent className="pt-10 px-8">
         <Box

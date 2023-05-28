@@ -15,6 +15,11 @@
       text-[#7f9c9f]
       text-sm
   }
+  .error-label {
+    @apply
+      text-[#d18064]
+      text-sm
+  }
 
   .amt-input {
     @apply
