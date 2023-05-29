@@ -1,16 +1,21 @@
 import { Box } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TipSelectionButton from "./TipSelectionButton";
 import { Control, UseFormRegisterReturn } from "react-hook-form";
 import InputFormSchema from "./InputFormSchema";
 
 interface Props {
+  // form hook
   control: Control<InputFormSchema, any>;
   formRegisterFields: UseFormRegisterReturn<"tipPercentage">;
   // error
   error?: boolean;
   helperText?: string;
+  // signals
+  resetSignal: boolean;
+  // events
   onTipSelectionChanged: (tipPercentage: string) => void;
+  onReset?: () => void;
 }
 
 interface Tip {
@@ -20,37 +25,47 @@ interface Tip {
 }
 
 function TipSelectionRadioButtonGroup({
+  // form hook
   control,
   formRegisterFields,
+  // error
   error,
   helperText,
+  // signals
+  resetSignal = false,
+  // events
   onTipSelectionChanged,
+  onReset = () => {},
 }: Props) {
-  const [tips] = useState<Tip[]>([
+  const defaultTips = [
     { percentage: "5%", custom: false, selected: false },
     { percentage: "10%", custom: false, selected: false },
     { percentage: "15%", custom: false, selected: false },
     { percentage: "25%", custom: false, selected: false },
     { percentage: "50%", custom: false, selected: false },
     { percentage: "", custom: true, selected: false },
-  ]);
-
-  const [, setCustomPercentage] = useState<string>("");
-  const onCustomPercentageChange = (value: string) => {
-    const zero = value == "0";
-    if (zero && tips[tips.length - 1].percentage == "") return;
-
-    setCustomPercentage(zero ? "" : `${value}`);
-    tips[tips.length - 1].percentage = zero ? "" : `${value}`;
-
-    // If the user were entering a "." (incomplete decimal number)
-    // -> early return without reporting change to upstream
-    if (value == ".") return;
-    // Report selected tip percentage to upstream
-    onTipSelectionChanged(zero ? "0%" : `${value}%`);
-  };
+  ];
+  const [tips, setTips] = useState<Tip[]>(defaultTips);
 
   const [selectedTipIndex, setSelectedTipIndex] = useState<number>(-1);
+  const [selectionReset, setSelectionReset] = useState<boolean>(true);
+
+  const resetSelections = () => {
+    setTips(defaultTips);
+    setSelectedTipIndex(-1);
+    setSelectionReset(true);
+    onTipSelectionChanged("0%");
+  };
+
+  useEffect(() => {
+    if (!resetSignal) return;
+    resetSelections();
+  }, [resetSignal]);
+
+  useEffect(() => {
+    if (!selectionReset) return;
+    onReset();
+  }, [tips]);
 
   const onClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     // If the target element is not a button
@@ -68,11 +83,15 @@ function TipSelectionRadioButtonGroup({
 
     // If this tip is already selected
     if (i == selectedTipIndex) {
+      // Unselect the tip (= Reset)
       tips[i].selected = false;
       setSelectedTipIndex(-1);
       onTipSelectionChanged("0%");
+      setSelectionReset(true);
       return;
     }
+
+    // From this point forward, the tip will be changed ...
 
     // Unselect the currently selected tip
     if (selectedTipIndex != -1) {
@@ -84,13 +103,36 @@ function TipSelectionRadioButtonGroup({
     setSelectedTipIndex(i);
 
     // Report selected tip percentage to upstream
+
+    // If it's custom tip
     if (tips[i].custom) {
       onTipSelectionChanged(
         tips[i].percentage == "" ? "0%" : `${tips[i].percentage}%`
       );
-    } else {
+    }
+    // If it's preset tip
+    else {
       onTipSelectionChanged(tips[i].percentage);
     }
+
+    setSelectionReset(false);
+  };
+
+  const [, setCustomPercentage] = useState<string>("");
+  const onCustomPercentageChange = (value: string) => {
+    const zero = value == "0";
+    if (zero && tips[tips.length - 1].percentage == "") return;
+
+    setCustomPercentage(zero ? "" : `${value}`);
+    tips[tips.length - 1].percentage = zero ? "" : `${value}`;
+
+    setSelectionReset(false);
+
+    // If the user were entering a "." (incomplete decimal number)
+    // -> early return without reporting change to upstream
+    if (value == ".") return;
+    // Report selected tip percentage to upstream
+    onTipSelectionChanged(zero ? "0%" : `${value}%`);
   };
 
   return (

@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@mui/material";
+import { Button, Card, CardContent } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import AmountInput from "./AmountInput";
 import TipSelectionRadioButtonGroup from "./TipSelectionRadioButtonGroup";
@@ -19,6 +19,7 @@ interface Props {
 function InputPanel({ className, onInputChanged }: Props) {
   const [bill, setBill] = useState<string>("");
   const [peopleNum, setPeopleNum] = useState<string>("");
+  const [resetTipSelection, setResetTipSelection] = useState<boolean>(false);
   const [tipPercentage, setTipPercentage] = useState<string>("");
 
   const parseStringVal = (stringVal: string) =>
@@ -27,10 +28,11 @@ function InputPanel({ className, onInputChanged }: Props) {
   // Get form hook
   const validatorResolver = classValidatorResolver(InputFormSchema);
   const {
-    trigger,
     register,
     formState: { errors },
     control,
+    trigger,
+    reset,
   } = useForm<InputFormSchema>({
     mode: "all",
     resolver: validatorResolver,
@@ -53,6 +55,25 @@ function InputPanel({ className, onInputChanged }: Props) {
     >
       <CardContent>
         <form>
+          <Button
+            onClick={() => {
+              if (bill == "" && tipPercentage == "" && peopleNum == "") return;
+              reset();
+              setBill("");
+              // Turn on reset signal for TipSelectionRadioButtonGroup
+              setResetTipSelection(true);
+              setPeopleNum("");
+
+              // Report to upstream
+              onInputChanged({
+                bill: parseStringVal(""),
+                tipPercentage: parseStringVal(""),
+                people: parseStringVal(""),
+              });
+            }}
+          >
+            Reset
+          </Button>
           <AmountInput
             // form hook
             control={control}
@@ -94,6 +115,7 @@ function InputPanel({ className, onInputChanged }: Props) {
             formRegisterFields={register("tipPercentage", {
               valueAsNumber: true,
             })}
+            resetSignal={resetTipSelection}
             // error
             error={errors.tipPercentage != null}
             helperText={errors.tipPercentage?.message}
@@ -107,6 +129,10 @@ function InputPanel({ className, onInputChanged }: Props) {
                 tipPercentage: parseStringVal(tipP),
                 people: parseStringVal(peopleNum),
               });
+            }}
+            onReset={() => {
+              // Turn off reset signal for TipSelectionRadioButtonGroup
+              setResetTipSelection(false);
             }}
           />
           <AmountInput
