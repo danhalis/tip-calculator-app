@@ -13,18 +13,18 @@
   .field-label {
     @apply
       text-[#7f9c9f]
-      text-sm
+      text-sm;
   }
   .error-label {
     @apply
       text-[#d18064]
-      text-sm
+      text-sm;
   }
 
   .amt-input {
     @apply
       rounded
-      bg-[#f4fafa]
+      bg-[#f4fafa];
   }
 
   .tip-selection-btn {
@@ -35,33 +35,33 @@
       hover:text-[#00494d]
       text-xl
       normal-case
-      h-11
+      h-11;
   }
   .custom-tip-selection-btn {
     @apply
       bg-[#f4fafa]
-      text-[#00494d]
+      text-[#00494d];
   }
   .tip-selection-btn-selected {
     @apply
       bg-[#26c0ab]
-      text-[#00494d]
+      text-[#00494d];
   }
 
   .result-amt-label {
     @apply
       text-white
-      text-sm
+      text-sm;
   }
   .result-amt-label-unit {
     @apply
       text-[#7f9c9f]
-      text-[11.5px]
+      text-[11.5px];
   }
   .result-amt {
     @apply
       text-[#26c0ab]
-      text-[42px]
+      text-[42px];
   }
 
   .action-btn {
@@ -69,6 +69,6 @@
       bg-[#26c0ab]
       hover:bg-[#9fe8df]
       text-[#00494d]
-      text-lg
+      text-lg;
   }
 }
