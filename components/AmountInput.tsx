@@ -171,8 +171,14 @@ function AmountInput({
                 );
 
                 // If the value is empty or ".", early return without calling form's onChange
-                // -> form won't error out on empty string
-                if (value == "" || value == ".") return;
+                if (value == ".") return;
+
+                // If the value is not empty string
+                if (value == "") {
+                  // Override empty string with minumum value
+                  // -> form won't error out on empty string
+                  e.target.value = `${min}`;
+                }
                 // Trigger form's onChange
                 formRegisterFields.onChange(e);
               }}

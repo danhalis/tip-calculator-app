@@ -77,7 +77,7 @@ function InputPanel({
 
   // Revalidate people number on bill value changed
   useEffect(() => {
-    (async () => trigger("people"))();
+    trigger("people");
   }, [bill]);
 
   // Reset input values once received reset signal
