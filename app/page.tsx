@@ -27,7 +27,7 @@ export default function Home() {
       space-y-20
     "
     >
-      <Image src="/logo.svg" alt="" width={70} height={70} />
+      <Image src="/logo.svg" alt="SPLITTER App Logo" width={70} height={70} />
       <Card
         className="
         flex

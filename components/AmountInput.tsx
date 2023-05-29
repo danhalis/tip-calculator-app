@@ -143,7 +143,7 @@ function AmountInput({
                   <InputAdornment position="start">
                     <Image
                       src={icon}
-                      alt=""
+                      alt={`Icon of input field for ${ariaLabel}`}
                       width={iconWidth}
                       height={iconHeight}
                     />
