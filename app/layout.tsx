@@ -4,7 +4,7 @@ import "@/app/globals.css";
 import { monospace700 } from "@/app/constants";
 import Head from "next/head";
 
-export const metadata = {
+const metadata = {
   title: "Splitter",
   description: "Tip calculator based on a bill",
 };
