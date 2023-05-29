@@ -6,10 +6,10 @@ import {
   useTheme,
 } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
-import AmountInput from "./AmountInput";
-import TipSelectionRadioButtonGroup from "./TipSelectionRadioButtonGroup";
+import AmountInput from "@/components/input/AmountInput";
+import TipSelectionRadioButtonGroup from "@/components/input/TipSelectionRadioButtonGroup";
 import { useForm } from "react-hook-form";
-import InputFormSchema from "./InputFormSchema";
+import InputFormSchema from "@/components/input/InputFormSchema";
 import { classValidatorResolver } from "@hookform/resolvers/class-validator";
 
 const cardContentTheme = (outerTheme: Theme) =>

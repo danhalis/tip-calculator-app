@@ -16,7 +16,7 @@ import {
 } from "@/app/constants";
 
 import { Controller, Control, UseFormRegisterReturn } from "react-hook-form";
-import InputFormSchema from "./InputFormSchema";
+import InputFormSchema from "@/components/input/InputFormSchema";
 
 interface AmountInputProps {
   // form hook

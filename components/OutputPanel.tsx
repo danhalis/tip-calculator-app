@@ -1,7 +1,7 @@
 import { Box, Button, Card, CardActions, CardContent } from "@mui/material";
 import React from "react";
 import { monospace700 } from "@/app/constants";
-import { Input } from "./InputPanel";
+import { Input } from "@/components/input/InputPanel";
 
 interface Props {
   className?: string;

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Card, CardContent } from "@mui/material";
-import InputPanel, { Input } from "@/components/InputPanel";
+import InputPanel, { Input } from "@/components/input/InputPanel";
 import OutputPanel from "@/components/OutputPanel";
 
 export default function Home() {

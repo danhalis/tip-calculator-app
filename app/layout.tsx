@@ -1,7 +1,7 @@
 "use client";
 
-import "./globals.css";
-import { monospace700 } from "./constants";
+import "@/app/globals.css";
+import { monospace700 } from "@/app/constants";
 import Head from "next/head";
 
 export const metadata = {

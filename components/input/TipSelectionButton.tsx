@@ -1,9 +1,9 @@
 import React from "react";
 import { Button } from "@mui/material";
 import { monospace700 } from "@/app/constants";
-import AmountInput from "./AmountInput";
+import AmountInput from "@/components/input/AmountInput";
 import { Control, UseFormRegisterReturn } from "react-hook-form";
-import InputFormSchema from "./InputFormSchema";
+import InputFormSchema from "@/components/input/InputFormSchema";
 
 interface Props {
   control: Control<InputFormSchema, any>;

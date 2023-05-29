@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import TipSelectionButton from "./TipSelectionButton";
+import TipSelectionButton from "@/components/input/TipSelectionButton";
 import { Control, UseFormRegisterReturn } from "react-hook-form";
-import InputFormSchema from "./InputFormSchema";
+import InputFormSchema from "@/components/input/InputFormSchema";
 
 interface Props {
   // form hook
