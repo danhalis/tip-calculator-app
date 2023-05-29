@@ -5,70 +5,70 @@
 @layer base {
   body {
     @apply
-      bg-[#c5e4e7];
+      !bg-[#c5e4e7];
   }
 }
 
 @layer components {
   .field-label {
     @apply
-      text-[#7f9c9f]
-      text-sm;
+      !text-[#7f9c9f]
+      !text-sm;
   }
   .error-label {
     @apply
-      text-[#d18064]
-      text-sm;
+      !text-[#d18064]
+      !text-sm;
   }
 
   .amt-input {
     @apply
-      rounded
-      bg-[#f4fafa];
+      !rounded
+      !bg-[#f4fafa];
   }
 
   .tip-selection-btn {
     @apply
-      bg-[#00494d]
-      hover:bg-[#9fe8df]
-      text-white
-      hover:text-[#00494d]
-      text-xl
-      normal-case
-      h-11;
+      !bg-[#00494d]
+      hover:!bg-[#9fe8df]
+      !text-white
+      hover:!text-[#00494d]
+      !text-xl
+      !normal-case
+      !h-11;
   }
   .custom-tip-selection-btn {
     @apply
-      bg-[#f4fafa]
-      text-[#00494d];
+      !bg-[#f4fafa]
+      !text-[#00494d];
   }
   .tip-selection-btn-selected {
     @apply
-      bg-[#26c0ab]
-      text-[#00494d];
+      !bg-[#26c0ab]
+      !text-[#00494d];
   }
 
   .result-amt-label {
     @apply
-      text-white
-      text-sm;
+      !text-white
+      !text-sm;
   }
   .result-amt-label-unit {
     @apply
-      text-[#7f9c9f]
-      text-[11.5px];
+      !text-[#7f9c9f]
+      !text-[11.5px];
   }
   .result-amt {
     @apply
-      text-[#26c0ab]
-      text-[42px];
+      !text-[#26c0ab]
+      !text-[42px];
   }
 
   .action-btn {
     @apply
-      bg-[#26c0ab]
-      hover:bg-[#9fe8df]
-      text-[#00494d]
-      text-lg;
+      !bg-[#26c0ab]
+      hover:!bg-[#9fe8df]
+      !text-[#00494d]
+      !text-lg;
   }
 }
