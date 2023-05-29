@@ -7,4 +7,9 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   plugins: [],
+  theme: {
+    fontFamily: {
+      "monospace": ['"Space Mono"']
+    }
+  },
 }

@@ -1,34 +1,10 @@
 import { Card, CardContent } from "@mui/material";
-import {
-  Theme,
-  ThemeProvider,
-  createTheme,
-  useTheme,
-} from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
 import AmountInput from "@/components/input/AmountInput";
 import TipSelectionRadioButtonGroup from "@/components/input/TipSelectionRadioButtonGroup";
 import { useForm } from "react-hook-form";
 import InputFormSchema from "@/components/input/InputFormSchema";
 import { classValidatorResolver } from "@hookform/resolvers/class-validator";
-
-const cardContentTheme = (outerTheme: Theme) =>
-  createTheme({
-    palette: {
-      mode: outerTheme.palette.mode,
-    },
-    components: {
-      MuiCardContent: {
-        styleOverrides: {
-          root: {
-            ":last-child": {
-              paddingBottom: 12,
-            },
-          },
-        },
-      },
-    },
-  });
 
 export interface Input {
   bill: number;
@@ -48,7 +24,6 @@ function InputPanel({
   onInputChanged,
   onResetSignalReceived,
 }: Props) {
-  const outerTheme = useTheme();
   const [bill, setBill] = useState<string>("");
   const [peopleNum, setPeopleNum] = useState<string>("");
   const [resetTipSelection, setResetTipSelection] = useState<boolean>(false);
@@ -107,106 +82,104 @@ function InputPanel({
       className={`${className}`}
       style={{ border: "none", boxShadow: "none" }}
     >
-      <ThemeProvider theme={cardContentTheme(outerTheme)}>
-        <CardContent className="pb-0">
-          <form className="space-y-8">
-            <AmountInput
-              // form hook
-              control={control}
-              formRegisterFields={register("bill", { valueAsNumber: true })}
-              // value
-              value={bill}
-              // error
-              error={errors.bill != null}
-              helperText={errors.bill?.message}
-              // styles
-              ariaLabel="bill"
-              label="Bill"
-              icon="/icon-dollar.svg"
-              iconWidth={11.6}
-              iconHeight={18}
-              margin="dense"
-              tailwindHeight="h-11"
-              // events
-              onValueChange={(value) => {
-                const zero = value == "" || value == "0";
-                // If bill is already 0
-                if (zero && bill == "") return;
-                setBill(value);
+      <CardContent className="pb-2">
+        <form className="space-y-8">
+          <AmountInput
+            // form hook
+            control={control}
+            formRegisterFields={register("bill", { valueAsNumber: true })}
+            // value
+            value={bill}
+            // error
+            error={errors.bill != null}
+            helperText={errors.bill?.message}
+            // styles
+            ariaLabel="bill"
+            label="Bill"
+            icon="/icon-dollar.svg"
+            iconWidth={11.6}
+            iconHeight={18}
+            margin="dense"
+            tailwindHeight="h-11"
+            // events
+            onValueChange={(value) => {
+              const zero = value == "" || value == "0";
+              // If bill is already 0
+              if (zero && bill == "") return;
+              setBill(value);
 
-                // If the user were entering a "." (incomplete decimal number)
-                // -> early return without reporting change to upstream
-                if (value == ".") return;
-                // Report updated input to upstream
-                onInputChanged({
-                  bill: parseStringVal(value),
-                  tipPercentage: parseStringVal(tipPercentage),
-                  people: parseStringVal(peopleNum),
-                });
-              }}
-            />
-            <TipSelectionRadioButtonGroup
-              // form hook
-              control={control}
-              formRegisterFields={register("tipPercentage", {
-                valueAsNumber: true,
-              })}
-              resetSignal={resetTipSelection}
-              // error
-              error={errors.tipPercentage != null}
-              helperText={errors.tipPercentage?.message}
-              // events
-              onTipSelectionChanged={(tipP) => {
-                setTipPercentage(tipP);
+              // If the user were entering a "." (incomplete decimal number)
+              // -> early return without reporting change to upstream
+              if (value == ".") return;
+              // Report updated input to upstream
+              onInputChanged({
+                bill: parseStringVal(value),
+                tipPercentage: parseStringVal(tipPercentage),
+                people: parseStringVal(peopleNum),
+              });
+            }}
+          />
+          <TipSelectionRadioButtonGroup
+            // form hook
+            control={control}
+            formRegisterFields={register("tipPercentage", {
+              valueAsNumber: true,
+            })}
+            resetSignal={resetTipSelection}
+            // error
+            error={errors.tipPercentage != null}
+            helperText={errors.tipPercentage?.message}
+            // events
+            onTipSelectionChanged={(tipP) => {
+              setTipPercentage(tipP);
 
-                // Report updated input to upstream
-                onInputChanged({
-                  bill: parseStringVal(bill),
-                  tipPercentage: parseStringVal(tipP),
-                  people: parseStringVal(peopleNum),
-                });
-              }}
-              onReset={() => {
-                // Turn off reset signal for TipSelectionRadioButtonGroup
-                setResetTipSelection(false);
-              }}
-            />
-            <AmountInput
-              // form hook
-              control={control}
-              formRegisterFields={register("people", { valueAsNumber: true })}
-              // value
-              allowedKeyStroke={/^\d$/g}
-              value={peopleNum}
-              // error
-              error={errors.people != null}
-              helperText={errors.people?.message}
-              // styles
-              ariaLabel="people-num"
-              label="Number of People"
-              icon="/icon-person.svg"
-              iconWidth={14.6}
-              iconHeight={18}
-              margin="dense"
-              tailwindHeight="h-11"
-              // events
-              onValueChange={(value) => {
-                const zero = value == "" || value == "0";
-                // If number of people is already 0
-                if (zero && peopleNum == "") return;
-                setPeopleNum(value);
+              // Report updated input to upstream
+              onInputChanged({
+                bill: parseStringVal(bill),
+                tipPercentage: parseStringVal(tipP),
+                people: parseStringVal(peopleNum),
+              });
+            }}
+            onReset={() => {
+              // Turn off reset signal for TipSelectionRadioButtonGroup
+              setResetTipSelection(false);
+            }}
+          />
+          <AmountInput
+            // form hook
+            control={control}
+            formRegisterFields={register("people", { valueAsNumber: true })}
+            // value
+            allowedKeyStroke={/^\d$/g}
+            value={peopleNum}
+            // error
+            error={errors.people != null}
+            helperText={errors.people?.message}
+            // styles
+            ariaLabel="people-num"
+            label="Number of People"
+            icon="/icon-person.svg"
+            iconWidth={14.6}
+            iconHeight={18}
+            margin="dense"
+            tailwindHeight="h-11"
+            // events
+            onValueChange={(value) => {
+              const zero = value == "" || value == "0";
+              // If number of people is already 0
+              if (zero && peopleNum == "") return;
+              setPeopleNum(value);
 
-                // Report updated input to upstream
-                onInputChanged({
-                  bill: parseStringVal(bill),
-                  tipPercentage: parseStringVal(tipPercentage),
-                  people: parseStringVal(value),
-                });
-              }}
-            />
-          </form>
-        </CardContent>
-      </ThemeProvider>
+              // Report updated input to upstream
+              onInputChanged({
+                bill: parseStringVal(bill),
+                tipPercentage: parseStringVal(tipPercentage),
+                people: parseStringVal(value),
+              });
+            }}
+          />
+        </form>
+      </CardContent>
     </Card>
   );
 }
