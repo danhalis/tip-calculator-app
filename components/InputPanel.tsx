@@ -57,7 +57,12 @@ function InputPanel({ className, onInputChanged }: Props) {
         <form>
           <Button
             onClick={() => {
-              if (bill == "" && tipPercentage == "" && peopleNum == "") return;
+              if (
+                bill == "" &&
+                parseStringVal(tipPercentage) == 0 &&
+                peopleNum == ""
+              )
+                return;
               reset();
               setBill("");
               // Turn on reset signal for TipSelectionRadioButtonGroup
@@ -66,9 +71,9 @@ function InputPanel({ className, onInputChanged }: Props) {
 
               // Report to upstream
               onInputChanged({
-                bill: parseStringVal(""),
-                tipPercentage: parseStringVal(""),
-                people: parseStringVal(""),
+                bill: 0,
+                tipPercentage: 0,
+                people: 0,
               });
             }}
           >
