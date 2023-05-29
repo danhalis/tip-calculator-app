@@ -6,9 +6,10 @@ import { Input } from "./InputPanel";
 interface Props {
   className?: string;
   input: Input;
+  onResetButtonClicked: () => void;
 }
 
-function OutputPanel({ className, input }: Props) {
+function OutputPanel({ className, input, onResetButtonClicked }: Props) {
   const { bill, tipPercentage, people } = input;
 
   const totalTip = (bill * tipPercentage) / 100;
@@ -25,14 +26,16 @@ function OutputPanel({ className, input }: Props) {
       justify-between
       bg-[#00494d]
       rounded-2xl
+      mt-1.5
+      mb-0.5
     `}
       style={{ border: "none", boxShadow: "none" }}
     >
-      <CardContent className="pt-10 px-8">
+      <CardContent className="pt-9 px-8">
         <Box
           className="
             flex justify-between items-center
-            mb-8
+            mb-6
           "
         >
           <Box>
@@ -63,6 +66,9 @@ function OutputPanel({ className, input }: Props) {
           variant="contained"
           className={`${monospace700.className} action-btn`}
           fullWidth
+          onClick={() => {
+            onResetButtonClicked();
+          }}
         >
           RESET
         </Button>

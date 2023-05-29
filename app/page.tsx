@@ -16,6 +16,8 @@ export default function Home() {
     setInput(input);
   };
 
+  const [resetSignal, setResetSignal] = useState<boolean>(false);
+
   return (
     <div
       className="
@@ -33,9 +35,24 @@ export default function Home() {
         w-[100vh]
         "
       >
-        <CardContent className="w-full flex p-6">
-          <InputPanel className="flex-1 pr-6" onInputChanged={onInputChanged} />
-          <OutputPanel className="flex-1" input={input} />
+        <CardContent className="w-full flex px-6 py-5">
+          <InputPanel
+            className="flex-1 pr-6"
+            resetSignal={resetSignal}
+            onInputChanged={onInputChanged}
+            onResetSignalReceived={() => {
+              // Turn off reset signal for downstream
+              setResetSignal(false);
+            }}
+          />
+          <OutputPanel
+            className="flex-1"
+            input={input}
+            onResetButtonClicked={() => {
+              // Turn on reset signal for downstream
+              setResetSignal(true);
+            }}
+          />
         </CardContent>
       </Card>
     </div>

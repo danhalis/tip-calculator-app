@@ -51,17 +51,17 @@
   .result-amt-label {
     @apply
       text-white
-      text-xs
+      text-sm
   }
   .result-amt-label-unit {
     @apply
       text-[#7f9c9f]
-      text-[9.5px]
+      text-[11.5px]
   }
   .result-amt {
     @apply
       text-[#26c0ab]
-      text-4xl
+      text-[42px]
   }
 
   .action-btn {
@@ -69,6 +69,6 @@
       bg-[#26c0ab]
       hover:bg-[#9fe8df]
       text-[#00494d]
-      text-sm
+      text-lg
   }
 }

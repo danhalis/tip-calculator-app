@@ -57,11 +57,13 @@ function TipSelectionRadioButtonGroup({
     onTipSelectionChanged("0%");
   };
 
+  // Reset tip selection once received reset signal
   useEffect(() => {
     if (!resetSignal) return;
     resetSelections();
   }, [resetSignal]);
 
+  // Report to upstream that reset is done once the entire tips array is set to default
   useEffect(() => {
     if (!selectionReset) return;
     onReset();
@@ -120,7 +122,7 @@ function TipSelectionRadioButtonGroup({
 
   const [, setCustomPercentage] = useState<string>("");
   const onCustomPercentageChange = (value: string) => {
-    const zero = value == "0";
+    const zero = value == "" || value == "0";
     if (zero && tips[tips.length - 1].percentage == "") return;
 
     setCustomPercentage(zero ? "" : `${value}`);
@@ -136,7 +138,7 @@ function TipSelectionRadioButtonGroup({
   };
 
   return (
-    <Box className="my-5">
+    <Box className="space-y-4">
       <Box className="flex justify-between">
         <h2 className="field-label">Select Tip %</h2>
         {error && <h2 className="error-label">{helperText}</h2>}
