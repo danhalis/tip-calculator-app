@@ -27,6 +27,8 @@ interface AmountInputProps {
   // value
   min?: number;
   max?: number;
+  allowedKeyStroke?: string | RegExp;
+  allowedValueRegex?: string | RegExp;
   value?: string;
   // error
   error?: boolean;
@@ -54,7 +56,9 @@ function AmountInput({
   // value
   min = 0,
   max,
-  value = "",
+  allowedKeyStroke = /^\d|\.$/g,
+  allowedValueRegex = /^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/,
+  value,
   // error
   error,
   helperText,
@@ -120,7 +124,7 @@ function AmountInput({
               {...formRegisterFields}
               // value
               value={value}
-              type="number"
+              type="text" // <- type="number" will wipe the whole text field once a non-number character is entered
               // styles
               aria-label={ariaLabel}
               placeholder={`${min}`}
@@ -135,28 +139,40 @@ function AmountInput({
               // icon
               InputProps={{
                 className: `${tailwindHeight}`,
-                startAdornment: (
+                startAdornment: icon && (
                   <InputAdornment position="start">
-                    {icon && (
-                      <Image
-                        src={icon}
-                        alt=""
-                        width={iconWidth}
-                        height={iconHeight}
-                      />
-                    )}
+                    <Image
+                      src={icon}
+                      alt=""
+                      width={iconWidth}
+                      height={iconHeight}
+                    />
                   </InputAdornment>
                 ),
               }}
               // events
               onChange={(e) => {
                 const value = e.target.value;
-                // Report new amount to upstream
-                onValueChange(value);
 
-                // If the value is empty, override it with minimum value
+                // If the change doesn't match the valid regex pattern
+                // -> No change to the value
+                // (This can prevent copy-pasting invalid string)
+                if (value && value != "." && !value.match(allowedValueRegex))
+                  return;
+
+                // Report new amount to upstream
+                onValueChange(
+                  // If value is something like ".3"
+                  value[0] == "." && value.length > 1
+                    ? // Convert it to "0.3"
+                      `${parseFloat(value)}`
+                    : // Else keep value as is (Example: "2", ".", "2.")
+                      value
+                );
+
+                // If the value is empty or ".", early return without calling form's onChange
                 // -> form won't error out on empty string
-                if (e.target.value == "") e.target.value = `${min}`;
+                if (value == "" || value == ".") return;
                 // Trigger form's onChange
                 formRegisterFields.onChange(e);
               }}
@@ -165,14 +181,14 @@ function AmountInput({
               }}
               onBlur={(e) => {
                 setTyping(false);
-                // If the value is empty, override it with minimum value
+                // If the value is empty or ".", early return without calling form's onBlur
                 // -> form won't error out on empty string
-                if (e.target.value == "") e.target.value = `${min}`;
+                if (e.target.value == "" || value == ".") return;
                 // Trigger form's onBlur
                 formRegisterFields.onBlur(e);
               }}
               onKeyPress={(e) => {
-                if (!e.key.match(/^\d$/g)) {
+                if (allowedKeyStroke && !e.key.match(allowedKeyStroke)) {
                   e.preventDefault();
                 }
               }}

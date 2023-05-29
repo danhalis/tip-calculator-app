@@ -69,11 +69,8 @@ function TipSelectionButton({
           autoFocus
           // events
           onValueChange={(value) => {
-            let parsed = parseFloat(value);
-            if (Number.isNaN(parsed)) parsed = 0;
-
             // Report updated custom percentage to upstream
-            onCustomPercentageChange(`${parsed}`);
+            onCustomPercentageChange(value);
           }}
         />
       )}

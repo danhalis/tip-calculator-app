@@ -39,9 +39,13 @@ function TipSelectionRadioButtonGroup({
   const onCustomPercentageChange = (value: string) => {
     const zero = value == "0";
     if (zero && tips[tips.length - 1].percentage == "") return;
+
     setCustomPercentage(zero ? "" : `${value}`);
     tips[tips.length - 1].percentage = zero ? "" : `${value}`;
 
+    // If the user were entering a "." (incomplete decimal number)
+    // -> early return without reporting change to upstream
+    if (value == ".") return;
     // Report selected tip percentage to upstream
     onTipSelectionChanged(zero ? "0%" : `${value}%`);
   };

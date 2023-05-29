@@ -13,6 +13,9 @@ function OutputPanel({ className, input }: Props) {
 
   const totalTip = (bill * tipPercentage) / 100;
 
+  const tipPerPerson = people == 0 ? 0 : totalTip / people;
+  const totalPerPerson = people == 0 ? 0 : (bill + totalTip) / people;
+
   return (
     <Card
       className={`
@@ -36,7 +39,12 @@ function OutputPanel({ className, input }: Props) {
             <h2 className="result-amt-label">Tip Amount</h2>
             <h3 className="result-amt-label-unit">/ person</h3>
           </Box>
-          <h2 className="result-amt">${totalTip / people}</h2>
+          <h2 className="result-amt">
+            $
+            {parseFloat(
+              tipPerPerson.toString().match(/^-?\d+(?:\.\d{0,2})?/)![0]
+            ).toFixed(2)}
+          </h2>
         </Box>
         <Box
           className="
@@ -47,7 +55,7 @@ function OutputPanel({ className, input }: Props) {
             <h2 className="result-amt-label">Total</h2>
             <h3 className="result-amt-label-unit">/ person</h3>
           </Box>
-          <h2 className="result-amt">${(bill + totalTip) / people}</h2>
+          <h2 className="result-amt">${totalPerPerson.toFixed(2)}</h2>
         </Box>
       </CardContent>
       <CardActions className="pb-8 px-8">

@@ -24,6 +24,7 @@ function InputPanel({ className, onInputChanged }: Props) {
   const parseStringVal = (stringVal: string) =>
     stringVal == "" ? 0 : parseFloat(stringVal);
 
+  // Get form hook
   const validatorResolver = classValidatorResolver(InputFormSchema);
   const {
     trigger,
@@ -56,7 +57,7 @@ function InputPanel({ className, onInputChanged }: Props) {
             // form hook
             control={control}
             formRegisterFields={register("bill", { valueAsNumber: true })}
-            // value binding
+            // value
             value={bill}
             // error
             error={errors.bill != null}
@@ -72,9 +73,13 @@ function InputPanel({ className, onInputChanged }: Props) {
             // events
             onValueChange={(value) => {
               const zero = value == "0";
+              // If bill is already 0
               if (zero && bill == "") return;
               setBill(value);
 
+              // If the user were entering a "." (incomplete decimal number)
+              // -> early return without reporting change to upstream
+              if (value == ".") return;
               // Report updated input to upstream
               onInputChanged({
                 bill: parseStringVal(value),
@@ -108,7 +113,8 @@ function InputPanel({ className, onInputChanged }: Props) {
             // form hook
             control={control}
             formRegisterFields={register("people", { valueAsNumber: true })}
-            // value binding
+            // value
+            allowedKeyStroke={/^\d$/g}
             value={peopleNum}
             // error
             error={errors.people != null}
@@ -124,6 +130,7 @@ function InputPanel({ className, onInputChanged }: Props) {
             // events
             onValueChange={(value) => {
               const zero = value == "0";
+              // If number of people is already 0
               if (zero && peopleNum == "") return;
               setPeopleNum(value);
 
