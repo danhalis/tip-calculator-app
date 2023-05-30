@@ -33,6 +33,7 @@ function CalculatorApp() {
         flex
         rounded-3xl
         w-[100vh]
+        shadow-[0_25px_50px_5px_rgba(170,210,220,1)]
         "
       >
         <CardContent className="w-full flex px-6 py-5">
