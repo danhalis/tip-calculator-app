@@ -143,7 +143,10 @@ function TipSelectionRadioButtonGroup({
         <h2 className="field-label">Select Tip %</h2>
         {error && <h2 className="error-label">{helperText}</h2>}
       </Box>
-      <Box className="grid grid-cols-3 gap-3 mt-2" onClick={onClick}>
+      <Box
+        className="grid grid-cols-2 gap-3 mt-2 lg:grid-cols-3"
+        onClick={onClick}
+      >
         {...tips.map((tip, i) => (
           <TipSelectionButton
             // form hook

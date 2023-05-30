@@ -65,7 +65,9 @@
   .result-amt {
     @apply
       !text-[#26c0ab]
-      !text-[42px];
+      !text-[32px]
+      lg:!text-[42px];
+
   }
 
   .action-btn {

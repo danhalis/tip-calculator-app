@@ -82,7 +82,7 @@ function InputPanel({
       className={`${className}`}
       style={{ border: "none", boxShadow: "none" }}
     >
-      <CardContent className="pb-2">
+      <CardContent>
         <form className="space-y-8">
           <AmountInput
             // form hook

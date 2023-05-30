@@ -31,7 +31,7 @@ function OutputPanel({ className, input, onResetButtonClicked }: Props) {
     `}
       style={{ border: "none", boxShadow: "none" }}
     >
-      <CardContent className="pt-9 px-8">
+      <CardContent className="pt-7 px-6 lg:pt-9 lg:px-8">
         <Box
           className="
             flex justify-between items-center
@@ -61,7 +61,7 @@ function OutputPanel({ className, input, onResetButtonClicked }: Props) {
           <h2 className="result-amt">${totalPerPerson.toFixed(2)}</h2>
         </Box>
       </CardContent>
-      <CardActions className="pb-8 px-8">
+      <CardActions className="px-6 pb-5 lg:px-8 lg:pb-8">
         <Button
           variant="contained"
           className={`${monospace700.className} action-btn`}
