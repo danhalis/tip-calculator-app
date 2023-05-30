@@ -85,6 +85,7 @@ function AmountInput({
     className: `
       ${monospace700.className}
       text-[#00494d]
+      !font-bold
       caret-[#9fe8df]
       ${tailwindFontSize}
       text-right
