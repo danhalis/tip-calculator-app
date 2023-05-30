@@ -10,6 +10,9 @@ export const monospace700 = Space_Mono({
 const normalTextFieldColor = "#9fe8df";
 const errorTextFieldColor = "#d18064";
 const textFieldThemeOptions: ThemeOptions = {
+  typography: {
+    fontFamily: ['"Space Mono"', "monospace"].join(","),
+  },
   palette: {
     mode: undefined,
   },
