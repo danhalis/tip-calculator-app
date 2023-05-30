@@ -27,7 +27,7 @@ interface AmountInputProps {
   // value
   min?: number;
   max?: number;
-  allowedKeyStroke?: string | RegExp;
+  allowedKeys?: string;
   allowedValueRegex?: string | RegExp;
   value?: string;
   // error
@@ -56,7 +56,7 @@ function AmountInput({
   // value
   min = 0,
   max,
-  allowedKeyStroke = /^\d|\.$/g,
+  allowedKeys = "\\d|\\.",
   allowedValueRegex = /^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/,
   value,
   // error
@@ -155,6 +155,13 @@ function AmountInput({
               onChange={(e) => {
                 const value = e.target.value;
 
+                // This check is for Chrome on Android devices since onKeyPress has no effect there
+                // If the new value contains any invalid characters
+                if (value.replaceAll(new RegExp(allowedKeys, "g"), "") != "") {
+                  e.preventDefault();
+                  return;
+                }
+
                 // If the change doesn't match the valid regex pattern
                 // -> No change to the value
                 // (This can prevent copy-pasting invalid string)
@@ -194,8 +201,14 @@ function AmountInput({
                 // Trigger form's onBlur
                 formRegisterFields.onBlur(e);
               }}
+              // Note: onKeyPress is not triggered by Chrome on Android devices
+              // https://stackoverflow.com/questions/36753548/keycode-on-android-is-always-229
+              // https://bugs.chromium.org/p/chromium/issues/detail?id=118639
               onKeyPress={(e) => {
-                if (allowedKeyStroke && !e.key.match(allowedKeyStroke)) {
+                if (
+                  allowedKeys &&
+                  !e.key.match(new RegExp(`^${allowedKeys}$`))
+                ) {
                   e.preventDefault();
                 }
               }}

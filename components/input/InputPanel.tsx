@@ -150,7 +150,7 @@ function InputPanel({
             control={control}
             formRegisterFields={register("people", { valueAsNumber: true })}
             // value
-            allowedKeyStroke={/^\d$/g}
+            allowedKeys={"\\d"}
             value={peopleNum}
             // error
             error={errors.people != null}
