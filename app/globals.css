@@ -22,9 +22,11 @@
   }
 
   .amt-input {
+    font-family: 'Space Mono', monospace !important;
     @apply
       !rounded
-      !bg-[#f4fafa];
+      !bg-[#f4fafa]
+      !font-bold;
   }
 
   .tip-selection-btn {
