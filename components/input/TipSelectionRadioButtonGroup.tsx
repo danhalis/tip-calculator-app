@@ -141,7 +141,7 @@ function TipSelectionRadioButtonGroup({
     <Box className="space-y-4">
       <Box className="flex justify-between">
         <h2 className="field-label">Select Tip %</h2>
-        {tips[selectedTipIndex].custom && error && (
+        {selectedTipIndex == tips.length - 1 && error && (
           <h2 className="error-label">{helperText}</h2>
         )}
       </Box>

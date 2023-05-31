@@ -38,8 +38,8 @@
       !font-bold
       !normal-case
       !h-11
-      betterhover:lg:!bg-[#9fe8df]
-      betterhover:lg:!text-[#00494d];
+      betterhover:hover:lg:!bg-[#9fe8df]
+      betterhover:hover:lg:!text-[#00494d];
   }
   .custom-tip-selection-btn {
     @apply
@@ -77,6 +77,6 @@
       !text-[#00494d]
       !text-lg
       !font-bold
-      betterhover:lg:!bg-[#9fe8df];
+      betterhover:hover:lg:!bg-[#9fe8df];
   }
 }
