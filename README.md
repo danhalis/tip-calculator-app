@@ -30,7 +30,7 @@ Users should be able to:
 
 Extra features I added:
 - Input field prevents entering non-numerical characters except for "." for decimal numbers (Copy-pasting invalid string should also be negated)
-- In input fields that allow decimal numbers (**Bill** and **Custom Tip**), an entry like **".1"** will automatically turn into **"0.1" **
+- In input fields that allow decimal numbers (**Bill** and **Custom Tip**), an entry like **".1"** will automatically turn into **"0.1"**
 - **Number of people** input field accepts only positive intergers ("." is not registered)
 - An error **"Can't be zero"** for **Number of people** only appears when bill is greater than 0
 - A warning appears when tip is **over 100%**
