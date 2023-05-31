@@ -33,13 +33,13 @@
     font-family: 'Space Mono', monospace !important;
     @apply
       !bg-[#00494d]
-      hover:!bg-[#9fe8df]
       !text-white
-      hover:!text-[#00494d]
       !text-xl
       !font-bold
       !normal-case
-      !h-11;
+      !h-11
+      betterhover:lg:!bg-[#9fe8df]
+      betterhover:lg:!text-[#00494d];
   }
   .custom-tip-selection-btn {
     @apply
@@ -74,9 +74,9 @@
     font-family: 'Space Mono', monospace !important;
     @apply
       !bg-[#26c0ab]
-      hover:!bg-[#9fe8df]
       !text-[#00494d]
       !text-lg
-      !font-bold;
+      !font-bold
+      betterhover:lg:!bg-[#9fe8df];
   }
 }
