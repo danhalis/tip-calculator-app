@@ -7,7 +7,7 @@ export default class InputFormSchema {
 
   @IsNumber({}, { message: "Please enter a number" })
   @Min(0, { message: "Can't be less than 0%" })
-  @Max(100, { message: "Can't be more than 100%" })
+  @Max(100, { message: "Tip exceeds 100%" })
   tipPercentage?: number;
 
   @IsNumber({ maxDecimalPlaces: 0 }, { message: "Please enter a number" })
